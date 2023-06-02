@@ -11,8 +11,11 @@ Resources:
   ApiFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: "awsdevday2023tokyo-sls-framework-web-adapter-native-image"
       PackageType: Image
       MemorySize: 2048
+      Architectures:
+        - arm64
       Tracing: Active
       Environment:
         Variables:
@@ -34,7 +37,7 @@ Resources:
             Path: /v1/{proxy+}
             Method: ANY
     Metadata:
-      DockerTag: slsjava-quarkus-ni-wa-ecr
+      DockerTag: awsdevday2023tokyo-sls-framework-web-adapter-native-image
       DockerContext: ./
       Dockerfile: Dockerfile
 
