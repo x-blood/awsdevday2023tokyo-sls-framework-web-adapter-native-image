@@ -14,8 +14,6 @@ Resources:
       FunctionName: "awsdevday2023tokyo-sls-framework-web-adapter-native-image"
       PackageType: Image
       MemorySize: 2048
-      Architectures:
-        - arm64
       Tracing: Active
       Environment:
         Variables:
