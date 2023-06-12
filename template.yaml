@@ -20,6 +20,10 @@ Resources:
           RUST_LOG: info
           READINESS_CHECK_PATH: /hello
           REMOVE_BASE_PATH: /v1
+          PRODUCT_TABLE_NAME: !Ref ProductsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ProductsTable
       AutoPublishAlias: live
       DeploymentPreference:
         Type: AllAtOnce
@@ -39,7 +43,21 @@ Resources:
       DockerContext: ./
       Dockerfile: Dockerfile
 
+  ProductsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: 'PK'
+          AttributeType: 'S'
+      KeySchema:
+        - AttributeName: 'PK'
+          KeyType: 'HASH'
+      BillingMode: PAY_PER_REQUEST
+      Tags:
+        - Key: "DoNotNuke"
+          Value: "true"
+
 Outputs:
   ApiUrl:
     Description: "API Gateway endpoint URL"
-    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/v1/hello"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/v1/products"
